@@ -7,6 +7,7 @@ import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.*;
 import net.minecraft.world.level.Level;
+import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
 import net.minecraftforge.registries.RegistryObject;
@@ -58,5 +59,9 @@ public class BdItems {
 
     public static Map<String, RegistryObject<Item>> getItemMap() {
         return itemMap;
+    }
+
+    public static void register(IEventBus eventBus) {
+        ITEMS.register(eventBus);
     }
 }

@@ -38,6 +38,10 @@ public class BlockStool extends Block  {
         return SHAPE;
     }
 
+    public boolean useShapeForLightOcclusion(BlockState blockState) {
+        return true;
+    }
+
     @Override
     public @NotNull InteractionResult use(BlockState blockState, Level level, BlockPos blockPos, Player player, InteractionHand hand, BlockHitResult result)
     {

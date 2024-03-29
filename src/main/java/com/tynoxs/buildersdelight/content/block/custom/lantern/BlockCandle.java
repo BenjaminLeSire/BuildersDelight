@@ -45,23 +45,8 @@ public class BlockCandle extends LanternLightable {
     }
 
     @Override
-    public InteractionResult use(BlockState state, Level worldIn, BlockPos pos, Player player, InteractionHand hand, net.minecraft.world.phys.BlockHitResult hit) {
-        ItemStack itemstack = player.getItemInHand(hand);
-        if (itemstack.getItem() == Items.FLINT_AND_STEEL && !state.getValue(LIT) && !state.getValue(WATERLOGGED)) {
-            worldIn.playSound(null, pos, SoundEvents.FLINTANDSTEEL_USE, SoundSource.BLOCKS, 1.0F, 1.0F);
-            worldIn.setBlockAndUpdate(pos, state.setValue(LIT, true));
-            if (!player.getAbilities().instabuild) {
-                itemstack.hurtAndBreak(1, player, (entity) -> {
-                    entity.broadcastBreakEvent(hand);
-                });
-            }
-            return InteractionResult.SUCCESS;
-        } else if (itemstack.isEmpty() && state.getValue(LIT)) {
-            worldIn.playSound(null, pos, SoundEvents.CANDLE_EXTINGUISH, SoundSource.BLOCKS, 1.0F, 1.0F);
-            worldIn.setBlockAndUpdate(pos, state.setValue(LIT, false));
-            return InteractionResult.SUCCESS;
-        }
-        return InteractionResult.PASS;
+    public void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> blockStateBuilder) {
+        blockStateBuilder.add(FACING, FACE, WATERLOGGED, LIT);
     }
 
     @Nullable
@@ -104,7 +89,7 @@ public class BlockCandle extends LanternLightable {
     @Override
     public void animateTick(BlockState stateIn, Level worldIn, BlockPos pos, RandomSource rand) {
         if (stateIn.getValue(LIT) && !stateIn.getValue(WATERLOGGED)) {
-            double d0, d1, d2, d3, d4, d5, d6, d7, d8, d9, d10, d11;
+            double d0, d1, d2, d3, d4, d5, d6, d7;
             Direction dir1 = stateIn.getValue(FACING);
 
             switch (stateIn.getValue(FACE)) {
@@ -113,7 +98,7 @@ public class BlockCandle extends LanternLightable {
                     d1 = pos.getY() + 1.01D;
                     d2 = pos.getZ() + 0.5D;
                     worldIn.addParticle(ParticleTypes.SMOKE, d0, d1, d2, 0, 0, 0);
-                    worldIn.addParticle(ParticleTypes.FLAME, d0, d1, d2, 0, 0, 0);
+                    worldIn.addParticle(this.flameParticle, d0, d1, d2, 0, 0, 0);
                 }
                 case WALL -> {
                     double xo1 = -dir1.getStepX() * 0.11;
@@ -122,7 +107,7 @@ public class BlockCandle extends LanternLightable {
                     d1 = pos.getY() + 0.92D;
                     d2 = pos.getZ() + 0.5D + zo2;
                     worldIn.addParticle(ParticleTypes.SMOKE, d0, d1, d2, 0, 0, 0);
-                    worldIn.addParticle(ParticleTypes.FLAME, d0, d1, d2, 0, 0, 0);
+                    worldIn.addParticle(this.flameParticle, d0, d1, d2, 0, 0, 0);
                 }
                 case CEILING -> {
 
@@ -130,35 +115,24 @@ public class BlockCandle extends LanternLightable {
                     d1 = pos.getY() + 0.75D;
                     d2 = pos.getZ() + 0.15D;
                     d3 = pos.getX() + 0.15D;
-                    d4 = pos.getY() + 0.75D;
-                    d5 = pos.getZ() + 0.5D;
-                    d6 = pos.getX() + 0.85D;
-                    d7 = pos.getY() + 0.75D;
-                    d8 = pos.getZ() + 0.5D;
-                    d9 = pos.getX() + 0.5D;
-                    d10 = pos.getY() + 0.75D;
-                    d11 = pos.getZ() + 0.85D;
+                    d4 = pos.getZ() + 0.5D;
+                    d5 = pos.getX() + 0.85D;
+                    d6 = pos.getY() + 0.75D;
+                    d7 = pos.getZ() + 0.85D;
 
                     worldIn.addParticle(ParticleTypes.SMOKE, d0, d1, d2, 0, 0, 0);
-                    worldIn.addParticle(ParticleTypes.FLAME, d0, d1, d2, 0, 0, 0);
+                    worldIn.addParticle(this.flameParticle, d0, d1, d2, 0, 0, 0);
 
-                    worldIn.addParticle(ParticleTypes.SMOKE, d3, d4, d5, 0, 0, 0);
-                    worldIn.addParticle(ParticleTypes.FLAME, d3, d4, d5, 0, 0, 0);
+                    worldIn.addParticle(ParticleTypes.SMOKE, d3, d1, d4, 0, 0, 0);
+                    worldIn.addParticle(this.flameParticle, d3, d1, d4, 0, 0, 0);
 
-                    worldIn.addParticle(ParticleTypes.SMOKE, d6, d7, d8, 0, 0, 0);
-                    worldIn.addParticle(ParticleTypes.FLAME, d6, d7, d8, 0, 0, 0);
+                    worldIn.addParticle(ParticleTypes.SMOKE, d5, d6, d4, 0, 0, 0);
+                    worldIn.addParticle(this.flameParticle, d5, d6, d4, 0, 0, 0);
 
-                    worldIn.addParticle(ParticleTypes.SMOKE, d9, d10, d11, 0, 0, 0);
-                    worldIn.addParticle(ParticleTypes.FLAME, d9, d10, d11, 0, 0, 0);
-
+                    worldIn.addParticle(ParticleTypes.SMOKE, d0, d1, d7, 0, 0, 0);
+                    worldIn.addParticle(this.flameParticle, d0, d1, d7, 0, 0, 0);
                 }
             }
         }
     }
-
-    @Override
-    public void createBlockStateDefinition(StateDefinition.Builder<Block, BlockState> blockStateBuilder) {
-        blockStateBuilder.add(FACING, FACE, WATERLOGGED, LIT);
-    }
-
 }

@@ -33,13 +33,13 @@ public class BuildersDelight {
 		config = new BdConfig();
 		IEventBus eventBus = FMLJavaModLoadingContext.get().getModEventBus();
 		ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, BdConfig.SPEC, CommonConfigFile);
-		BdTabs.TABS.register(eventBus);
-		BdItems.ITEMS.register(eventBus);
-		BdBlocks.BLOCKS.register(eventBus);
-		BdDecoration.DECORATION.register(eventBus);
-		BdEntities.ENTITIES.register(eventBus);
-		BdContainers.CONTAINERS.register(eventBus);
-		BdSounds.SOUND_EVENTS.register(eventBus);
+		BdTabs.register(eventBus);
+		BdItems.register(eventBus);
+		BdBlocks.register(eventBus);
+		BdDecoration.register(eventBus);
+		BdEntities.register(eventBus);
+		BdContainers.register(eventBus);
+		BdSounds.register(eventBus);
 
 		eventBus.addListener(this::clientSetup);
 		eventBus.addListener(this::commonSetup);

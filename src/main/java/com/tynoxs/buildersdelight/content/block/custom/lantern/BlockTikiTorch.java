@@ -32,6 +32,12 @@ public class BlockTikiTorch extends LanternLightable {
     }
 
     @Override
+    public BlockState getStateForPlacement(BlockPlaceContext context) {
+        BlockState blockstate = super.getStateForPlacement(context);
+        return blockstate.setValue(WATERLOGGED, context.getLevel().getFluidState(context.getClickedPos()).getType() == Fluids.WATER);
+    }
+
+    @Override
     public @NotNull VoxelShape getShape(BlockState blockState, @NotNull BlockGetter getter, @NotNull BlockPos pos, @NotNull CollisionContext context) {
         return STANDING;
     }
@@ -47,12 +53,6 @@ public class BlockTikiTorch extends LanternLightable {
             worldIn.addParticle(ParticleTypes.SMOKE, d0, d1, d2, 0, 0, 0);
             worldIn.addParticle(ParticleTypes.FLAME, d0, d1, d2, 0, 0, 0);
         }
-    }
-
-    @Override
-    public BlockState getStateForPlacement(BlockPlaceContext context) {
-        BlockState blockstate = super.getStateForPlacement(context);
-        return blockstate.setValue(WATERLOGGED, context.getLevel().getFluidState(context.getClickedPos()).getType() == Fluids.WATER);
     }
 
     @Override

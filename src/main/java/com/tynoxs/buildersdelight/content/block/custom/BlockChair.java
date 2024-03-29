@@ -63,10 +63,6 @@ public class BlockChair extends BlockStool {
         };
     }
 
-    public boolean useShapeForLightOcclusion(BlockState blockState) {
-        return true;
-    }
-
     @Nullable
     public BlockState getStateForPlacement(BlockPlaceContext blockPlaceContext) {
         for(Direction direction : blockPlaceContext.getNearestLookingDirections()) {

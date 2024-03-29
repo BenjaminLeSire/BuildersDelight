@@ -51,5 +51,4 @@ public abstract class LanternLightable extends Block implements SimpleWaterlogge
     public FluidState getFluidState(BlockState state) {
         return state.getValue(WATERLOGGED) ? Fluids.WATER.getSource(false) : super.getFluidState(state);
     }
-
 }
