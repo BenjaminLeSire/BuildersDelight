@@ -1,7 +1,7 @@
 package com.tynoxs.buildersdelight.event;
 
 import com.tynoxs.buildersdelight.BuildersDelight;
-import com.tynoxs.buildersdelight.content.block.custom.lantern.IWeatheringBlock;
+import com.tynoxs.buildersdelight.content.block.custom.IWeatheringBlock;
 import net.minecraft.world.level.LevelAccessor;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.state.BlockState;
