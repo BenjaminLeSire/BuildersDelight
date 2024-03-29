@@ -1,6 +1,5 @@
-package com.tynoxs.buildersdelight.content.block.custom.lantern;
+package com.tynoxs.buildersdelight.content.block.custom;
 
-import com.tynoxs.buildersdelight.util.WeatheringUtils;
 import net.minecraft.advancements.CriteriaTriggers;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerPlayer;

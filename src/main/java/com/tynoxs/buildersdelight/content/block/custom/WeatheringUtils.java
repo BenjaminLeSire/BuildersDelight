@@ -1,4 +1,4 @@
-package com.tynoxs.buildersdelight.util;
+package com.tynoxs.buildersdelight.content.block.custom;
 
 import com.google.common.base.Suppliers;
 import com.google.common.collect.ImmutableBiMap;

@@ -1,5 +1,6 @@
 package com.tynoxs.buildersdelight.content.block.custom.lantern;
 
+import com.tynoxs.buildersdelight.content.block.custom.IWeatheringBlock;
 import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.util.RandomSource;
