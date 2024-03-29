@@ -11,36 +11,25 @@ import net.minecraft.world.item.ItemStack;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.RegistryObject;
 
+import java.util.Map;
+import java.util.function.Supplier;
+
 public class BdTabs {
     public static final DeferredRegister<CreativeModeTab> TABS = DeferredRegister.create(Registries.CREATIVE_MODE_TAB, BuildersDelight.MODID);
-    public static final RegistryObject<CreativeModeTab> TabBlocks = TABS.register("blocks", () -> CreativeModeTab.builder()
-            .title(Component.translatable("itemGroup.tab_blocks"))
-            .icon(() -> new ItemStack(BdBlocks.SPRUCE_PLANKS_7.get()))
-            .displayItems((params, output) -> {
-                for (RegistryObject<Item> item : BdBlocks.getBlockItemMap().values()) {
-                    output.accept(item.get().getDefaultInstance());
-                }
 
-            }).withTabsBefore(CreativeModeTabs.SPAWN_EGGS)
-            .build());
+    public static final RegistryObject<CreativeModeTab> TabBlocks = registerTab("blocks", "itemGroup.tab_blocks", BdBlocks.getBlockItemMap(), () -> new ItemStack(BdBlocks.SPRUCE_PLANKS_7.get()));
+    public static final RegistryObject<CreativeModeTab> TabDecoration = registerTab("decoration", "itemGroup.tab_decoration", BdDecoration.getDecorationItemMap(), () -> new ItemStack(BdDecoration.SPRUCE_TABLE_1.get()));
+    public static final RegistryObject<CreativeModeTab> TabMaterials = registerTab("materials", "itemGroup.tab_materials", BdItems.getItemMap(), () -> new ItemStack(BdItems.SPRUCE_FURNITURE_KIT.get()));
 
-    public static final RegistryObject<CreativeModeTab> TabDecoration = TABS.register("decoration", () -> CreativeModeTab.builder()
-            .title(Component.translatable("itemGroup.tab_decoration"))
-            .icon(() -> new ItemStack(BdDecoration.SPRUCE_TABLE_1.get()))
-            .displayItems((params, output) -> {
-                for (RegistryObject<Item> item : BdDecoration.getDecorationItemMap().values()) {
-                    output.accept(item.get().getDefaultInstance());
-                }
-            }).withTabsBefore(TabBlocks.getKey())
-            .build());
-
-    public static final RegistryObject<CreativeModeTab> TabMaterials = TABS.register("materials", () -> CreativeModeTab.builder()
-            .title(Component.translatable("itemGroup.tab_materials"))
-            .icon(() -> new ItemStack(BdItems.SPRUCE_FURNITURE_KIT.get()))
-            .displayItems((params, output) -> {
-                for (RegistryObject<Item> item : BdItems.getItemMap().values()) {
-                    output.accept(item.get().getDefaultInstance());
-                }
-            }).withTabsBefore(TabDecoration.getKey())
-            .build());
+    private static RegistryObject<CreativeModeTab> registerTab(String name, String titleKey, Map<String, RegistryObject<Item>> itemMap, Supplier<ItemStack> iconSupplier) {
+        return TABS.register(name, () -> CreativeModeTab.builder()
+                .title(Component.translatable(titleKey))
+                .icon(iconSupplier)
+                .displayItems((params, output) -> {
+                    for (RegistryObject<Item> item : itemMap.values()) {
+                        output.accept(item.get().getDefaultInstance());
+                    }
+                }).withTabsBefore(CreativeModeTabs.SPAWN_EGGS)
+                .build());
+    }
 }
