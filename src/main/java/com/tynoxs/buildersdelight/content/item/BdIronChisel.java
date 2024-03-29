@@ -2,12 +2,9 @@ package com.tynoxs.buildersdelight.content.item;
 
 import com.tynoxs.buildersdelight.content.gui.menus.ContainerChisel;
 import com.tynoxs.buildersdelight.content.init.BdConfig;
-import net.minecraft.advancements.Advancement;
-import net.minecraft.nbt.CompoundTag;
-
-import net.minecraft.resources.ResourceLocation;
 import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
+import net.minecraft.world.item.Item;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.inventory.AbstractContainerMenu;
@@ -20,28 +17,14 @@ import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.FriendlyByteBuf;
 
-import net.minecraftforge.common.capabilities.ForgeCapabilities;
-import net.minecraftforge.items.ItemStackHandler;
 import net.minecraftforge.network.NetworkHooks;
 
 import javax.annotation.Nullable;
 
-public class BdIronChisel extends BdItem {
+public class BdIronChisel extends Item {
 
     public BdIronChisel(Properties properties) {
         super(properties);
-    }
-
-    @Override
-    public void onCraftedBy(ItemStack stack, Level world, Player player) {
-        super.onCraftedBy(stack, world, player);
-        if (!world.isClientSide && player instanceof ServerPlayer serverPlayer) {
-            Advancement advancement = world.getServer().getAdvancements().getAdvancement(
-                    new ResourceLocation("buildersdelight:recipes/iron_chisel"));
-            if (advancement != null) {
-                serverPlayer.getAdvancements().award(advancement, "unlock");
-            }
-        }
     }
 
     @Override
@@ -69,22 +52,5 @@ public class BdIronChisel extends BdItem {
         }
 
         return InteractionResultHolder.sidedSuccess(stack, world.isClientSide);
-    }
-
-    @Override
-    public CompoundTag getShareTag(ItemStack stack) {
-        CompoundTag nbt = super.getShareTag(stack);
-        if (nbt != null)
-            stack.getCapability(ForgeCapabilities.ITEM_HANDLER, null)
-                    .ifPresent(capability -> nbt.put("Inventory", ((ItemStackHandler) capability).serializeNBT()));
-        return nbt;
-    }
-
-    @Override
-    public void readShareTag(ItemStack stack, @Nullable CompoundTag nbt) {
-        super.readShareTag(stack, nbt);
-        if (nbt != null)
-            stack.getCapability(ForgeCapabilities.ITEM_HANDLER, null)
-                    .ifPresent(capability -> ((ItemStackHandler) capability).deserializeNBT((CompoundTag) nbt.get("Inventory")));
     }
 }
