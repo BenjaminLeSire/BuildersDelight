@@ -10,11 +10,13 @@ import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.client.resources.model.BlockModelRotation;
 import net.minecraft.client.resources.model.ModelResourceLocation;
 import net.minecraft.core.Direction;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.client.model.IDynamicBakedModel;
 import net.minecraftforge.client.model.data.ModelData;
+import net.minecraftforge.client.model.geometry.IGeometryBakingContext;
 import net.minecraftforge.registries.ForgeRegistries;
 
 import javax.annotation.Nonnull;
@@ -28,10 +30,12 @@ public class CTBakedModel implements IDynamicBakedModel {
 
     private static final FaceBakery BAKERY = new FaceBakery();
 
-    private final IConnectedTextureBlock block;
+    private final IGeometryBakingContext context;
+    private final ResourceLocation modelLocation;
 
-    public CTBakedModel(IConnectedTextureBlock block){
-        this.block = block;
+    public CTBakedModel(IGeometryBakingContext context, ResourceLocation modelLocation) {
+        this.context = context;
+        this.modelLocation = modelLocation;
     }
 
     @Override
@@ -66,7 +70,7 @@ public class CTBakedModel implements IDynamicBakedModel {
 
     @Override
     public ItemTransforms getTransforms(){
-        return Minecraft.getInstance().getModelManager().getModel(new ModelResourceLocation(Objects.requireNonNull(ForgeRegistries.BLOCKS.getKey(Blocks.STONE)), "")).getTransforms();
+        return context.getTransforms();
     }
 
     @Nonnull
