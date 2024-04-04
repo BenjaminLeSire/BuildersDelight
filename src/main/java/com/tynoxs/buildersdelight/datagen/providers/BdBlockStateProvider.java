@@ -3,9 +3,14 @@ package com.tynoxs.buildersdelight.datagen.providers;
 import com.tynoxs.buildersdelight.content.block.custom.BlockInteractive;
 import com.tynoxs.buildersdelight.content.init.BdBlocks;
 import com.tynoxs.buildersdelight.datagen.blockstate.BdBlockStateCreator;
+import com.tynoxs.buildersdelight.content.block.connected.model.CTBlockModelLoader;
 import net.minecraft.data.PackOutput;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.block.*;
+import net.minecraftforge.client.model.generators.BlockModelBuilder;
+import net.minecraftforge.client.model.generators.CustomLoaderBuilder;
 import net.minecraftforge.common.data.ExistingFileHelper;
+import net.minecraftforge.registries.ForgeRegistries;
 
 public class BdBlockStateProvider extends BdBlockStateCreator {
     public BdBlockStateProvider(PackOutput output, ExistingFileHelper exFileHelper) {
@@ -869,5 +874,18 @@ public class BdBlockStateProvider extends BdBlockStateCreator {
         simpleBlock(BdBlocks.LABORATORY_2.get());
         logBlock((RotatedPillarBlock) BdBlocks.LABORATORY_3.get());
         lampBlock((RedstoneLampBlock) BdBlocks.LABORATORY_4.get(), blockTexture(BdBlocks.LABORATORY_4.get()), blockTexture(BdBlocks.LABORATORY_4.get()));
+    }
+
+    public static class CTBlockLoaderBuilder extends CustomLoaderBuilder<BlockModelBuilder> {
+        public CTBlockLoaderBuilder(ResourceLocation loader, BlockModelBuilder parent, ExistingFileHelper existingFileHelper) {
+            super(loader, parent, existingFileHelper);
+        }
+    }
+
+    protected BlockModelBuilder registerCustomBlockLoader(Block block) {
+        return models().getBuilder(ForgeRegistries.BLOCKS.getKey(block).getPath())
+            .parent(models().getExistingFile(mcLoc("cube")))
+            .customLoader((builder, helper) -> new CTBlockLoaderBuilder(CTBlockModelLoader.GENERATOR_LOADER, builder, helper))
+            .end();
     }
 }
