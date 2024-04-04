@@ -60,7 +60,7 @@ public class CTBakedModel implements IDynamicBakedModel {
 
     @Override
     public TextureAtlasSprite getParticleIcon(){
-        return this.getTexture();
+        return this.getTexture(false);
     }
 
     @Override
@@ -79,16 +79,25 @@ public class CTBakedModel implements IDynamicBakedModel {
         if(side == null)
             return Collections.emptyList();
 
-        return Collections.singletonList(this.createQuad(side, extraData));
+        return Collections.singletonList(this.createQuad(state, side, extraData));
     }
 
-    protected TextureAtlasSprite getTexture(){
-        return Minecraft.getInstance().getTextureAtlas(TextureAtlas.LOCATION_BLOCKS).apply(this.block.getTexture());
+    protected TextureAtlasSprite getTexture(boolean asItem){
+        if (asItem) {
+            // From inventory or as item, different texture path.
+            return Minecraft.getInstance().getTextureAtlas(TextureAtlas.LOCATION_BLOCKS).apply(
+                new ResourceLocation(modelLocation.getNamespace(), "block/connected/" + modelLocation.getPath())
+            );
+        }
+
+        return Minecraft.getInstance().getTextureAtlas(TextureAtlas.LOCATION_BLOCKS).apply(
+            new ResourceLocation(modelLocation.getNamespace(), modelLocation.getPath().replaceFirst("block/", "block/connected/"))
+        );
     }
 
-    protected BakedQuad createQuad(Direction side, ModelData modelData){
+    protected BakedQuad createQuad(@Nullable BlockState state, Direction side, ModelData modelData){
         BlockElementFace face = new BlockElementFace(side.getOpposite(), 0, "", new BlockFaceUV(this.getUV(side, modelData), 0));
-        return BAKERY.bakeQuad(new Vector3f(0, 0, 0), new Vector3f(16, 16, 16), face, getTexture(), side, BlockModelRotation.X0_Y0, null, true, null);
+        return BAKERY.bakeQuad(new Vector3f(0, 0, 0), new Vector3f(16, 16, 16), face, getTexture(state == null), side, BlockModelRotation.X0_Y0, null, true, null);
     }
 
     protected float[] getUV(Direction side, ModelData modelData){
