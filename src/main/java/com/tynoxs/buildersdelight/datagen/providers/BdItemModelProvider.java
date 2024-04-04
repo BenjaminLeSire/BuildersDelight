@@ -1006,7 +1006,6 @@ public class BdItemModelProvider extends ItemModelProvider {
     }
 
     public void blockItem(RegistryObject<Block> block) {
-        this.withExistingParent(ForgeRegistries.BLOCKS.getKey(block.get()).getPath(), mcLoc("block/cube_all"))
-                .texture("all", new ResourceLocation(BuildersDelight.MODID, "block/" + ForgeRegistries.BLOCKS.getKey(block.get()).getPath()));
+        this.withExistingParent(ForgeRegistries.BLOCKS.getKey(block.get()).getPath(), modLoc("block/" + ForgeRegistries.BLOCKS.getKey(block.get()).getPath()));
     }
 }
