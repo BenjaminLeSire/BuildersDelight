@@ -10,6 +10,7 @@ import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.client.resources.model.BlockModelRotation;
 import net.minecraft.client.resources.model.ModelResourceLocation;
 import net.minecraft.core.Direction;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.CrossCollisionBlock;
@@ -17,6 +18,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BooleanProperty;
 import net.minecraftforge.client.model.IDynamicBakedModel;
 import net.minecraftforge.client.model.data.ModelData;
+import net.minecraftforge.client.model.geometry.IGeometryBakingContext;
 import net.minecraftforge.registries.ForgeRegistries;
 
 import javax.annotation.Nonnull;
@@ -27,10 +29,12 @@ public class CTPaneBakedModel implements IDynamicBakedModel {
 
     private static final FaceBakery BAKERY = new FaceBakery();
 
-    private final IConnectedTextureBlock pane;
+    private final IGeometryBakingContext context;
+    private final ResourceLocation modelLocation;
 
-    public CTPaneBakedModel(IConnectedTextureBlock pane){
-        this.pane = pane;
+    public CTPaneBakedModel(IGeometryBakingContext context, ResourceLocation modelLocation){
+        this.context = context;
+        this.modelLocation = modelLocation;
     }
 
     @Override

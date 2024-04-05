@@ -3,6 +3,7 @@ package com.tynoxs.buildersdelight.content.block.connected.model;
 import com.tynoxs.buildersdelight.content.block.connected.IConnectedTextureBlock;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.BlockAndTintGetter;
 import net.minecraft.world.level.BlockGetter;
 import net.minecraft.world.level.block.Block;
@@ -10,6 +11,7 @@ import net.minecraft.world.level.block.PipeBlock;
 import net.minecraft.world.level.block.state.BlockState;
 import net.minecraftforge.client.model.data.ModelData;
 import net.minecraftforge.client.model.data.ModelProperty;
+import net.minecraftforge.client.model.geometry.IGeometryBakingContext;
 
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
@@ -18,8 +20,8 @@ import java.util.Map;
 
 public class CTConnectedPaneBakedModel extends CTPaneBakedModel {
 
-    public CTConnectedPaneBakedModel(IConnectedTextureBlock block){
-        super(block);
+    public CTConnectedPaneBakedModel(IGeometryBakingContext context, ResourceLocation modelLocation){
+        super(context, modelLocation);
     }
 
     @Nonnull
