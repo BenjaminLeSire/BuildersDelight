@@ -59,7 +59,7 @@ public class CTPaneBakedModel implements IDynamicBakedModel {
 
     @Override
     public TextureAtlasSprite getParticleIcon(){
-        return this.getTexture();
+        return this.getTexture(false);
     }
 
     @Override
@@ -90,8 +90,17 @@ public class CTPaneBakedModel implements IDynamicBakedModel {
         return quads;
     }
 
-    protected TextureAtlasSprite getTexture(){
-        return Minecraft.getInstance().getTextureAtlas(TextureAtlas.LOCATION_BLOCKS).apply(this.pane.getTexture());
+    protected TextureAtlasSprite getTexture(boolean asItem){
+        if (asItem) {
+            // From inventory or as item, different texture path.
+            return Minecraft.getInstance().getTextureAtlas(TextureAtlas.LOCATION_BLOCKS).apply(
+                new ResourceLocation(modelLocation.getNamespace(), "block/connected/" + modelLocation.getPath())
+            );
+        }
+
+        return Minecraft.getInstance().getTextureAtlas(TextureAtlas.LOCATION_BLOCKS).apply(
+            new ResourceLocation(modelLocation.getNamespace(), modelLocation.getPath().replaceFirst("block/", "block/connected/").replaceFirst("_pane", ""))
+        );
     }
 
     protected float[] getUV(Direction side, ModelData modelData){
@@ -112,7 +121,7 @@ public class CTPaneBakedModel implements IDynamicBakedModel {
         float[] uv = new float[]{7 / 8f, 2 * 7 + 7 / 8f, 9 / 8f, 2 * 7 + 9 / 8f};
         BlockElementFace face = new BlockElementFace(hasCulling ? side : null, -1, "", new BlockFaceUV(uv, 0));
 
-        BakedQuad quad = BAKERY.bakeQuad(from, to, face, getTexture(), side, BlockModelRotation.X0_Y0, null, true, null);
+        BakedQuad quad = BAKERY.bakeQuad(from, to, face, getTexture(state == null), side, BlockModelRotation.X0_Y0, null, true, null);
         return Collections.singletonList(quad);
     }
 
@@ -151,13 +160,13 @@ public class CTPaneBakedModel implements IDynamicBakedModel {
             if(hasQuad && hasCulling == culling){
                 Vector3f from = getPartFromPos(part), to = getPartToPos(part);
                 BlockElementFace face = new BlockElementFace(hasCulling ? side : null, -1, "", new BlockFaceUV(uv, rotation));
-                quads.add(BAKERY.bakeQuad(from, to, face, getTexture(), side, BlockModelRotation.X0_Y0, null, true, null));
+                quads.add(BAKERY.bakeQuad(from, to, face, getTexture(state == null), side, BlockModelRotation.X0_Y0, null, true, null));
             }
         }else if(side == part && !culling){
             Vector3f from = new Vector3f(7, 0, 7), to = new Vector3f(9, 16, 9);
             float[] uv = new float[]{totalUV[0] + 7 * unitW, totalUV[1], totalUV[0] + 9 * unitH, totalUV[3]};
             BlockElementFace face = new BlockElementFace(null, -1, "", new BlockFaceUV(uv, 0));
-            quads.add(BAKERY.bakeQuad(from, to, face, getTexture(), side, BlockModelRotation.X0_Y0, null, true, null));
+            quads.add(BAKERY.bakeQuad(from, to, face, getTexture(state == null), side, BlockModelRotation.X0_Y0, null, true, null));
         }
 
         return quads;
