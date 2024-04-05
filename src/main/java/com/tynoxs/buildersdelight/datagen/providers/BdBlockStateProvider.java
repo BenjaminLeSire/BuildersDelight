@@ -4,6 +4,7 @@ import com.tynoxs.buildersdelight.content.block.custom.BlockInteractive;
 import com.tynoxs.buildersdelight.content.init.BdBlocks;
 import com.tynoxs.buildersdelight.datagen.blockstate.BdBlockStateCreator;
 import com.tynoxs.buildersdelight.content.block.connected.model.CTBlockModelLoader;
+import com.tynoxs.buildersdelight.content.block.connected.model.CTPaneModelLoader;
 import net.minecraft.data.PackOutput;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.block.*;
@@ -886,6 +887,13 @@ public class BdBlockStateProvider extends BdBlockStateCreator {
         return models().getBuilder(ForgeRegistries.BLOCKS.getKey(block).getPath())
             .parent(models().getExistingFile(mcLoc("cube")))
             .customLoader((builder, helper) -> new CTBlockLoaderBuilder(CTBlockModelLoader.GENERATOR_LOADER, builder, helper))
+            .end();
+    }
+
+    protected BlockModelBuilder registerCustomPaneLoader(Block block) {
+        return models().getBuilder(ForgeRegistries.BLOCKS.getKey(block).getPath())
+            .parent(models().getExistingFile(mcLoc("cube")))
+            .customLoader((builder, helper) -> new CTBlockLoaderBuilder(CTPaneModelLoader.GENERATOR_LOADER, builder, helper))
             .end();
     }
 }
