@@ -69,7 +69,7 @@ public class CTPaneBakedModel implements IDynamicBakedModel {
 
     @Override
     public ItemTransforms getTransforms(){
-        return Minecraft.getInstance().getModelManager().getModel( new ModelResourceLocation(Objects.requireNonNull(ForgeRegistries.BLOCKS.getKey(Blocks.STONE)), "")).getTransforms();
+        return context.getTransforms();
     }
 
     @Nonnull
