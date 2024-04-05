@@ -2,6 +2,7 @@ package com.tynoxs.buildersdelight.content.init;
 
 import com.tynoxs.buildersdelight.BuildersDelight;
 import com.tynoxs.buildersdelight.content.block.connected.model.CTBlockModelLoader;
+import com.tynoxs.buildersdelight.content.block.connected.model.CTPaneModelLoader;
 import com.tynoxs.buildersdelight.content.gui.screens.ChiselScreen;
 import com.tynoxs.buildersdelight.content.gui.menus.ContainerChisel;
 import net.minecraft.client.gui.screens.MenuScreens;
@@ -37,6 +38,7 @@ public class BdContainers {
     @SubscribeEvent
     public static void modelInit(ModelEvent.RegisterGeometryLoaders event) {
         CTBlockModelLoader.register(event);
+        CTPaneModelLoader.register(event);
     }
 
     public static void register(IEventBus eventBus) {
