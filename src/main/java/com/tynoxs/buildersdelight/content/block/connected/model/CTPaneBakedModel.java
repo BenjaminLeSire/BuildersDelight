@@ -80,7 +80,7 @@ public class CTPaneBakedModel implements IDynamicBakedModel {
         Direction[] sides = side == null ? Direction.values() : new Direction[]{side};
         boolean culling = side != null;
         for(Direction side2 : sides){
-            quads.addAll(this.getPostQuad(side2, culling, this.isEnabledUp(null, extraData), this.isEnabledDown(null, extraData)));
+            quads.addAll(this.getPostQuad(state, side2, culling, this.isEnabledUp(null, extraData), this.isEnabledDown(null, extraData)));
 
             float[] uv = this.getUV(side2, extraData);
             for(Direction part : Direction.Plane.HORIZONTAL)
@@ -100,7 +100,7 @@ public class CTPaneBakedModel implements IDynamicBakedModel {
         return new float[]{0, 0, 16, 16};
     }
 
-    protected List<BakedQuad> getPostQuad(Direction side, boolean culling, boolean isEnabledUp, boolean isEnabledDown){
+    protected List<BakedQuad> getPostQuad(@Nullable BlockState state, Direction side, boolean culling, boolean isEnabledUp, boolean isEnabledDown){
         if(side.getAxis() != Direction.Axis.Y)
             return Collections.emptyList();
 
