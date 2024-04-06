@@ -94,7 +94,7 @@ public class CTPaneBakedModel implements IDynamicBakedModel {
         if (asItem) {
             // From inventory or as item, different texture path.
             return Minecraft.getInstance().getTextureAtlas(TextureAtlas.LOCATION_BLOCKS).apply(
-                new ResourceLocation(modelLocation.getNamespace(), "block/connected/" + modelLocation.getPath())
+                new ResourceLocation(modelLocation.getNamespace(), "block/connected/" + modelLocation.getPath().replaceFirst("_pane", ""))
             );
         }
 
