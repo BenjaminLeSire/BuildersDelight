@@ -34,8 +34,8 @@ public class BuildersDelight {
 		IEventBus eventBus = FMLJavaModLoadingContext.get().getModEventBus();
 		ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, BdConfig.SPEC, CommonConfigFile);
 		BdTabs.register(eventBus);
-		BdItems.register(eventBus);
 		BdBlocks.register(eventBus);
+		BdItems.register(eventBus);
 		BdDecoration.register(eventBus);
 		BdEntities.register(eventBus);
 		BdContainers.register(eventBus);

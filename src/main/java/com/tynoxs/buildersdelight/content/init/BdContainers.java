@@ -1,10 +1,13 @@
 package com.tynoxs.buildersdelight.content.init;
 
 import com.tynoxs.buildersdelight.BuildersDelight;
+import com.tynoxs.buildersdelight.content.block.connected.model.CTBlockModelLoader;
+import com.tynoxs.buildersdelight.content.block.connected.model.CTPaneModelLoader;
 import com.tynoxs.buildersdelight.content.gui.screens.ChiselScreen;
 import com.tynoxs.buildersdelight.content.gui.menus.ContainerChisel;
 import net.minecraft.client.gui.screens.MenuScreens;
 import net.minecraft.world.inventory.AbstractContainerMenu;
+import net.minecraftforge.client.event.ModelEvent;
 import net.minecraftforge.common.extensions.IForgeMenuType;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.eventbus.api.SubscribeEvent;
@@ -30,6 +33,12 @@ public class BdContainers {
 
     private static <T extends AbstractContainerMenu>RegistryObject<MenuType<T>> registerMenuType(IContainerFactory<T> factory, String name) {
         return CONTAINERS.register(name, () -> IForgeMenuType.create(factory));
+    }
+
+    @SubscribeEvent
+    public static void modelInit(ModelEvent.RegisterGeometryLoaders event) {
+        CTBlockModelLoader.register(event);
+        CTPaneModelLoader.register(event);
     }
 
     public static void register(IEventBus eventBus) {

@@ -35,9 +35,9 @@ public class BDDataGenerators {
 
         generator.addProvider(event.includeServer(), new BdItemTagProvider(packOutput, lookupProvider, blockTagsProvider.contentsGetter(), existingFileHelper));
 
-        generator.addProvider(event.includeClient(), new BdItemModelProvider(packOutput, existingFileHelper));
-
         generator.addProvider(event.includeClient(), new BdBlockStateProvider(packOutput, existingFileHelper));
+
+        generator.addProvider(event.includeClient(), new BdItemModelProvider(packOutput, existingFileHelper));
 
         generator.addProvider(event.includeClient(), new ForgeAdvancementProvider(packOutput, lookupProvider, existingFileHelper, List.of(new BdAdvancementProvider())));
 
